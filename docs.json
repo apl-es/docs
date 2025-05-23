@@ -60,12 +60,17 @@
           {
             "group": "IPStack",
             "pages": [
-              "ipstack/introduction"
+              "ipstack/introduction",
+              "api-reference/endpoint/get",
+              "api-reference/endpoint/create",
+              "api-reference/endpoint/delete",
+              "api-reference/endpoint/webhook"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Currencylayer",
             "pages": [
+              "ipstack/introduction",
               "api-reference/endpoint/get",
               "api-reference/endpoint/create",
               "api-reference/endpoint/delete",
