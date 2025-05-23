@@ -61,7 +61,7 @@
             "group": "IPStack",
             "pages": [
               "ipstack/introduction",
-              "api-reference/endpoint/check"
+              "ipstack/endpoint/check"
             ]
           },
           {
