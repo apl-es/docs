@@ -1,0 +1,286 @@
+openapi: 3.1.0
+info:
+  title: ipstack API
+  version: 1.0.0
+  description: >
+    ipstack provides real-time IP to geolocation data including timezone, connection, currency, and security analysis.
+
+servers:
+  - url: https://api.ipstack.com
+    description: Main API server
+
+paths:
+  /{ip_address}:
+    get:
+      operationId: lookupIpAddress
+      summary: Lookup geolocation data for a specific IP address
+      parameters:
+        - name: ip_address
+          in: path
+          required: true
+          description: IP address or domain to look up
+          schema:
+            type: string
+        - name: access_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: hostname
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: security
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: output
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+        - name: callback
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Geolocation data for the IP address
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpstackResponse'
+
+  /check:
+    get:
+      operationId: lookupRequesterIp
+      summary: Lookup geolocation data for the requester's IP address
+      parameters:
+        - name: access_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: hostname
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: security
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: output
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+        - name: callback
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Geolocation data for the requester’s IP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpstackResponse'
+
+  /bulk:
+    get:
+      operationId: bulkLookup
+      summary: Lookup geolocation data for multiple IPs
+      description: >
+        Lookup up to 50 comma-separated IPs in one request. Available on Professional plan and above.
+      parameters:
+        - name: access_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: ips
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: hostname
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: security
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: output
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+        - name: callback
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of geolocation results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpstackResponse'
+
+components:
+  schemas:
+    IpstackResponse:
+      type: object
+      properties:
+        ip:
+          type: string
+        hostname:
+          type: string
+        type:
+          type: string
+        continent_code:
+          type: string
+        continent_name:
+          type: string
+        country_code:
+          type: string
+        country_name:
+          type: string
+        region_code:
+          type: string
+        region_name:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        location:
+          type: object
+          properties:
+            geoname_id:
+              type: integer
+            capital:
+              type: string
+            calling_code:
+              type: string
+            is_eu:
+              type: boolean
+            country_flag:
+              type: string
+            country_flag_emoji:
+              type: string
+            languages:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  name:
+                    type: string
+                  native:
+                    type: string
+        time_zone:
+          type: object
+          properties:
+            id:
+              type: string
+            current_time:
+              type: string
+            gmt_offset:
+              type: integer
+            code:
+              type: string
+            is_daylight_saving:
+              type: boolean
+        currency:
+          type: object
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+            plural:
+              type: string
+            symbol:
+              type: string
+            symbol_native:
+              type: string
+        connection:
+          type: object
+          properties:
+            asn:
+              type: integer
+            isp:
+              type: string
+        security:
+          type: object
+          properties:
+            is_proxy:
+              type: boolean
+            proxy_type:
+              type: string
+            is_crawler:
+              type: boolean
+            crawler_name:
+              type: string
+            crawler_type:
+              type: string
+            is_tor:
+              type: boolean
+            threat_level:
+              type: string
+            threat_types:
+              type: array
+              items:
+                type: string
