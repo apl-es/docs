@@ -61,7 +61,8 @@
             "group": "IPStack",
             "pages": [
               "ipstack/introduction",
-              "ipstack/endpoint/check"
+              "ipstack/endpoint/check",
+              "ipstack/endpoint/ip_address"
             ]
           },
           {
