@@ -42,7 +42,8 @@
             "pages": [
               "ipstack/introduction",
               "ipstack/endpoint/check",
-              "ipstack/endpoint/ip_address"
+              "ipstack/endpoint/ip_address",
+              "ipstack/endpoint/bulk"
             ]
           },
           {
